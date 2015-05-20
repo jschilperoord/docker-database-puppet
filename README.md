@@ -2,7 +2,7 @@
 
 This is based on the great work from Edwin Biemond on his docker-database-puppet image.
 
-It will download a minimal Oracle Linux 6 image, Puppet 3.7 and all it dependencies
+It will download a minimal Oracle Linux 6 image, Puppet 3.7 and all it dependencies. I had to use a rather simple DB template because with the normal General purpose template the installation hangs.
 
 The Docker image will be big, and off course this is not supported by Oracle and like always check your license to use this software
 
