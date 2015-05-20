@@ -2,7 +2,7 @@
 
 node 'default' {
   include oradb_os
-  include oradb_12c
+  include oradb_11g
   include oradb_configuration
 }
 
@@ -50,15 +50,15 @@ class oradb_os {
 
 }
 
-class oradb_12c {
+class oradb_11g {
   require oradb_os
 
-    oradb::installdb{ '12.1.0.1_Linux-x86-64':
-      version                => '12.1.0.1',
-      file                   => 'linuxamd64_12c_database',
+    oradb::installdb{ '11.2.0.4_Linux-x86-64':
+      version                => '11.2.0.4',
+      file                   => 'p13390677_112040_Linux-x86-64',
       databaseType           => 'SE',
       oracleBase             => '/oracle',
-      oracleHome             => '/oracle/product/12.1/db',
+      oracleHome             => '/oracle/product/11.2/db',
       userBaseDir            => '/home',
       bashProfile            => false,
       user                   => 'oracle',
@@ -71,17 +71,17 @@ class oradb_12c {
     }
 
     oradb::net{ 'config net':
-      oracleHome   => '/oracle/product/12.1/db',
-      version      => '12.1',
+      oracleHome   => '/oracle/product/11.2/db',
+      version      => '11.2',
       user         => 'oracle',
       group        => 'dba',
       downloadDir  => "/var/tmp/install",
-      require      => Oradb::Installdb['12.1.0.1_Linux-x86-64'],
+      require      => Oradb::Installdb['11.2.0.4_Linux-x86-64'],
     }
 
     oradb::listener{'start listener':
       oracleBase   => '/oracle',
-      oracleHome   => '/oracle/product/12.1/db',
+      oracleHome   => '/oracle/product/11.2/db',
       user         => 'oracle',
       group        => 'dba',
       action       => 'start',
@@ -90,30 +90,32 @@ class oradb_12c {
 
     oradb::database{ 'oraDb':
       oracleBase              => '/oracle',
-      oracleHome              => '/oracle/product/12.1/db',
-      version                 => '12.1',
+      oracleHome              => '/oracle/product/11.2/db',
+      version                 => '11.2',
       user                    => 'oracle',
       group                   => 'dba',
       downloadDir             => "/var/tmp/install",
       action                  => 'create',
       dbName                  => 'orcl',
       dbDomain                => 'example.com',
+      template                => 'custom',
       sysPassword             => 'Welcome01',
       systemPassword          => 'Welcome01',
       dataFileDestination     => "/oracle/oradata",
       recoveryAreaDestination => "/oracle/flash_recovery_area",
       characterSet            => "AL32UTF8",
       nationalCharacterSet    => "UTF8",
-      initParams              => "open_cursors=400,processes=200,job_queue_processes=2",
-      sampleSchema            => 'TRUE',
+      initParams              => "open_cursors=400,processes=200,job_queue_processes=1",
+      sampleSchema            => 'FALSE',
       memoryPercentage        => "40",
       memoryTotal             => "800",
       databaseType            => "MULTIPURPOSE",
+      emConfiguration         => "NONE",
       require                 => Oradb::Listener['start listener'],
     }
 
     oradb::dbactions{ 'start oraDb':
-      oracleHome              => '/oracle/product/12.1/db',
+      oracleHome              => '/oracle/product/11.2/db',
       user                    => 'oracle',
       group                   => 'dba',
       action                  => 'start',
@@ -122,7 +124,7 @@ class oradb_12c {
     }
 
     oradb::autostartdatabase{ 'autostart oracle':
-      oracleHome              => '/oracle/product/12.1/db',
+      oracleHome              => '/oracle/product/11.2/db',
       user                    => 'oracle',
       dbName                  => 'soarepos',
       require                 => Oradb::Dbactions['start oraDb'],
@@ -131,7 +133,7 @@ class oradb_12c {
 }
 
 class oradb_configuration {
-  require oradb_12c
+  require oradb_11g
 
   # tablespace {'MY_TS':
   #   ensure                    => present,

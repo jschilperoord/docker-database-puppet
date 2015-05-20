@@ -1,10 +1,4 @@
-# CentOS 6
-FROM centos:centos6
-
-# Do this to enable Oracle Linux
-# wget http://public-yum.oracle.com/docker-images/OracleLinux/OL6/oraclelinux-6.6.tar.xz
-# docker load -i oraclelinux-6.6.tar.xz
-# FROM oraclelinux:6.6
+FROM oraclelinux:6.6
 
 RUN yum -y install hostname.x86_64 rubygems ruby-devel gcc git unzip
 RUN echo "gem: --no-ri --no-rdoc" > ~/.gemrc
@@ -25,14 +19,16 @@ ADD puppet/manifests/site.pp /etc/puppet/
 WORKDIR /etc/puppet/
 RUN librarian-puppet install
 
+ADD custom.dbt.erb /etc/puppet/modules/oradb/templates/custom.dbt.erb
+
 # upload software
 RUN mkdir /var/tmp/install
 RUN chmod 777 /var/tmp/install
 
 RUN mkdir /software
 
-COPY linuxamd64_12c_database_1of2.zip /software/
-COPY linuxamd64_12c_database_2of2.zip /software/
+COPY p13390677_112040_Linux-x86-64_1of7.zip /software/
+COPY p13390677_112040_Linux-x86-64_2of7.zip /software/
 
 RUN chmod -R 777 /software
 
