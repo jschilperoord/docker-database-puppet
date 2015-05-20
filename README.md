@@ -1,6 +1,6 @@
 ## Oracle Database 11.2.0.4 ( 11g ) Standard Edition Docker image
 
-This is based on the great work from Edwin Biemond on his docker-database-puppet image.
+This is based on the great work from Edwin Biemond on his oracle database docker image.
 
 It will download a minimal Oracle Linux 6 image, Puppet 3.7 and all it dependencies. I had to use a rather simple DB template because with the normal General purpose template the installation hangs.
 
