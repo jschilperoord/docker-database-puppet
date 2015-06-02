@@ -1,5 +1,8 @@
 FROM oraclelinux:6.6
 
+RUN rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6 \
+ && rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
 RUN yum -y install hostname.x86_64 rubygems ruby-devel gcc git unzip
 RUN echo "gem: --no-ri --no-rdoc" > ~/.gemrc
 
@@ -34,6 +37,11 @@ RUN chmod -R 777 /software
 
 RUN puppet apply /etc/puppet/site.pp --verbose --detailed-exitcodes || [ $? -eq 2 ]
 
+RUN pip install --upgrade 'pip >= 1.4, < 1.5' \
+    && pip install --upgrade supervisor supervisor-stdout \
+    && mkdir -p /var/log/supervisor/ \
+    && yum clean all
+
 EXPOSE 1521
 
 ADD startup.sh /
@@ -45,6 +53,9 @@ WORKDIR /
 RUN rm -rf /software/*
 RUN rm -rf /var/tmp/install/*
 RUN rm -rf /var/tmp/*
+RUN rm -rf /var/cache/yum/*
 RUN rm -rf /tmp/*
 
-CMD bash -C '/startup.sh';'bash'
+COPY supervisord.conf /etc/supervisord.conf
+
+CMD ["/usr/bin/supervisord", "--configuration=/etc/supervisord.conf"]
