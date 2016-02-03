@@ -10,7 +10,7 @@ RUN rpm --import https://yum.puppetlabs.com/RPM-GPG-KEY-puppetlabs && \
     rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
 
 # configure & install puppet
-RUN yum install -y puppet tar
+RUN yum install -y puppet tar dos2unix
 RUN gem install -y highline -v 1.6.21
 RUN gem install -y librarian-puppet -v 1.0.3
 
@@ -37,14 +37,10 @@ RUN chmod -R 777 /software
 
 RUN puppet apply /etc/puppet/site.pp --verbose --detailed-exitcodes || [ $? -eq 2 ]
 
-RUN pip install --upgrade 'pip >= 1.4, < 1.5' \
-    && pip install --upgrade supervisor supervisor-stdout \
-    && mkdir -p /var/log/supervisor/ \
-    && yum clean all
-
 EXPOSE 1521
 
 ADD startup.sh /
+RUN dos2unix -o /startup.sh
 RUN chmod 0755 /startup.sh
 
 WORKDIR /
@@ -53,9 +49,6 @@ WORKDIR /
 RUN rm -rf /software/*
 RUN rm -rf /var/tmp/install/*
 RUN rm -rf /var/tmp/*
-RUN rm -rf /var/cache/yum/*
 RUN rm -rf /tmp/*
 
-COPY supervisord.conf /etc/supervisord.conf
-
-CMD ["/usr/bin/supervisord", "--configuration=/etc/supervisord.conf"]
+CMD bash -C '/startup.sh';'bash'
