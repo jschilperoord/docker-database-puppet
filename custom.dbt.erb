@@ -1,4 +1,4 @@
-<DatabaseTemplate name="<%= @dbName %>" description="<%= @dbName %> template" version="11.2.0.0.0">
+<DatabaseTemplate name="<%= @db_name %>" description="<%= @db_name %> template" version="11.2.0.0.0">
    <CommonAttributes>
       <option name="OMS" value="false"/>
       <option name="JSERVER" value="false"/>
@@ -25,8 +25,8 @@
    <CustomScripts Execute="false"/>
    <InitParamAttributes>
       <InitParams>
-         <initParam name="db_name" value="<%= @dbName %>"/>
-         <initParam name="db_domain" value="<%= @dbDomain %>"/>
+         <initParam name="db_name" value="<%= @db_name %>"/>
+         <initParam name="db_domain" value="<%= @db_domain %>"/>
          <initParam name="dispatchers" value="(PROTOCOL=TCP) (SERVICE={SID}XDB)"/>
          <initParam name="audit_file_dest" value="{ORACLE_BASE}/admin/{DB_UNIQUE_NAME}/adump"/>
          <initParam name="compatible" value="11.2.0.4.0"/>
@@ -34,7 +34,7 @@
          <initParam name="sga_target" value="768" unit="MB"/>
          <initParam name="processes" value="150"/>
          <initParam name="undo_tablespace" value="UNDOTBS1"/>
-         <initParam name="control_files" value="(&quot;<%= @oracleBase %>/oradata/{DB_UNIQUE_NAME}/control01.ctl&quot;, &quot;<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/control02.ctl&quot;)"/>
+         <initParam name="control_files" value="(&quot;<%= @oracle_base %>/oradata/{DB_UNIQUE_NAME}/control01.ctl&quot;, &quot;<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/control02.ctl&quot;)"/>
          <initParam name="diagnostic_dest" value="{ORACLE_BASE}"/>
          <initParam name="audit_trail" value="db"/>
          <initParam name="nls_territory" value="THE NETHERLANDS"/>
@@ -44,14 +44,14 @@
          <initParam name="pga_aggregate_target" value="256" unit="MB"/>
       </InitParams>
       <MiscParams>
-         <databaseType><%= @databaseType %></databaseType>
-         <memoryPercentage><%= @memoryPercentage %></memoryPercentage>
-         <recoveryAreaDestination><%= @recoveryAreaDestination %></recoveryAreaDestination>
+         <databaseType><%= @database_type %></databaseType>
+         <memoryPercentage><%= @memory_percentage %></memoryPercentage>
+         <recoveryAreaDestination><%= @recovery_area_destination %></recoveryAreaDestination>
          <maxUserConn>20</maxUserConn>
-         <totalMemory><%= @memoryTotal %></totalMemory>
+         <totalMemory><%= @memory_total %></totalMemory>
          <customSGA>false</customSGA>
-         <characterSet>"<%= @characterSet %>"</characterSet>
-         <nationalCharacterSet>"<%= @nationalCharacterSet %>"</nationalCharacterSet>
+         <characterSet>"<%= @character_set %>"</characterSet>
+         <nationalCharacterSet>"<%= @nationalcharacter_set %>"</nationalCharacterSet>
          <archiveLogMode>false</archiveLogMode>
          <initParamFileName>{ORACLE_BASE}/admin/{DB_UNIQUE_NAME}/pfile/init.ora</initParamFileName>
       </MiscParams>
@@ -64,10 +64,10 @@
          <maxLogMembers>3</maxLogMembers>
          <maxLogHistory>1</maxLogHistory>
          <maxInstances>8</maxInstances>
-         <image name="control01.ctl" filepath="<%= @oracleBase %>/oradata/{DB_UNIQUE_NAME}/"/>
-         <image name="control02.ctl" filepath="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/"/>
+         <image name="control01.ctl" filepath="<%= @oracle_base %>/oradata/{DB_UNIQUE_NAME}/"/>
+         <image name="control02.ctl" filepath="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/"/>
       </ControlfileAttributes>
-      <DatafileAttributes id="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/sysaux01.dbf">
+      <DatafileAttributes id="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/sysaux01.dbf">
          <tablespace>SYSAUX</tablespace>
          <temporary>false</temporary>
          <online>true</online>
@@ -78,7 +78,7 @@
          <increment unit="KB">10240</increment>
          <maxSize unit="MB">-1</maxSize>
       </DatafileAttributes>
-      <DatafileAttributes id="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/system01.dbf">
+      <DatafileAttributes id="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/system01.dbf">
          <tablespace>SYSTEM</tablespace>
          <temporary>false</temporary>
          <online>true</online>
@@ -89,7 +89,7 @@
          <increment unit="KB">10240</increment>
          <maxSize unit="MB">-1</maxSize>
       </DatafileAttributes>
-      <DatafileAttributes id="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/temp01.dbf">
+      <DatafileAttributes id="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/temp01.dbf">
          <tablespace>TEMP</tablespace>
          <temporary>false</temporary>
          <online>true</online>
@@ -100,7 +100,7 @@
          <increment unit="KB">640</increment>
          <maxSize unit="MB">-1</maxSize>
       </DatafileAttributes>
-      <DatafileAttributes id="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/undotbs01.dbf">
+      <DatafileAttributes id="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/undotbs01.dbf">
          <tablespace>UNDOTBS1</tablespace>
          <temporary>false</temporary>
          <online>true</online>
@@ -111,7 +111,7 @@
          <increment unit="KB">5120</increment>
          <maxSize unit="MB">-1</maxSize>
       </DatafileAttributes>
-      <DatafileAttributes id="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/users01.dbf">
+      <DatafileAttributes id="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/users01.dbf">
          <tablespace>USERS</tablespace>
          <temporary>false</temporary>
          <online>true</online>
@@ -145,7 +145,7 @@
          <autoSegmentMgmt>true</autoSegmentMgmt>
          <bigfile>false</bigfile>
          <datafilesList>
-            <TablespaceDatafileAttributes id="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/sysaux01.dbf">
+            <TablespaceDatafileAttributes id="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/sysaux01.dbf">
                <id>-1</id>
             </TablespaceDatafileAttributes>
          </datafilesList>
@@ -173,7 +173,7 @@
          <autoSegmentMgmt>true</autoSegmentMgmt>
          <bigfile>false</bigfile>
          <datafilesList>
-            <TablespaceDatafileAttributes id="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/system01.dbf">
+            <TablespaceDatafileAttributes id="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/system01.dbf">
                <id>-1</id>
             </TablespaceDatafileAttributes>
          </datafilesList>
@@ -201,7 +201,7 @@
          <autoSegmentMgmt>true</autoSegmentMgmt>
          <bigfile>false</bigfile>
          <datafilesList>
-            <TablespaceDatafileAttributes id="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/temp01.dbf">
+            <TablespaceDatafileAttributes id="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/temp01.dbf">
                <id>-1</id>
             </TablespaceDatafileAttributes>
          </datafilesList>
@@ -229,7 +229,7 @@
          <autoSegmentMgmt>true</autoSegmentMgmt>
          <bigfile>false</bigfile>
          <datafilesList>
-            <TablespaceDatafileAttributes id="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/undotbs01.dbf">
+            <TablespaceDatafileAttributes id="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/undotbs01.dbf">
                <id>-1</id>
             </TablespaceDatafileAttributes>
          </datafilesList>
@@ -257,7 +257,7 @@
          <autoSegmentMgmt>true</autoSegmentMgmt>
          <bigfile>false</bigfile>
          <datafilesList>
-            <TablespaceDatafileAttributes id="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/users01.dbf">
+            <TablespaceDatafileAttributes id="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/users01.dbf">
                <id>-1</id>
             </TablespaceDatafileAttributes>
          </datafilesList>
@@ -266,19 +266,19 @@
          <reuse>false</reuse>
          <fileSize unit="KB">51200</fileSize>
          <Thread>1</Thread>
-         <member ordinal="0" memberName="redo01.log" filepath="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/"/>
+         <member ordinal="0" memberName="redo01.log" filepath="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/"/>
       </RedoLogGroupAttributes>
       <RedoLogGroupAttributes id="2">
          <reuse>false</reuse>
          <fileSize unit="KB">51200</fileSize>
          <Thread>1</Thread>
-         <member ordinal="0" memberName="redo02.log" filepath="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/"/>
+         <member ordinal="0" memberName="redo02.log" filepath="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/"/>
       </RedoLogGroupAttributes>
       <RedoLogGroupAttributes id="3">
          <reuse>false</reuse>
          <fileSize unit="KB">51200</fileSize>
          <Thread>1</Thread>
-         <member ordinal="0" memberName="redo03.log" filepath="<%= @dataFileDestination %>/oradata/{DB_UNIQUE_NAME}/"/>
+         <member ordinal="0" memberName="redo03.log" filepath="<%= @data_file_destination %>/oradata/{DB_UNIQUE_NAME}/"/>
       </RedoLogGroupAttributes>
    </StorageAttributes>
 </DatabaseTemplate>
